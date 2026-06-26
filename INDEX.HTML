@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safa Al Manasik Travel & Tours | Hajj, Umrah & Worldwide Tours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            50: '#FFFDF5', 100: '#FFF9E0', 200: '#FFF0B8',
+                            300: '#FFE080', 400: '#FFD040', 500: '#C9A84C',
+                            600: '#B8923A', 700: '#9A7A2E', 800: '#7C6224', 900: '#5E4A1A',
+                        },
+                        mosque: {
+                            50: '#F0FAF4', 100: '#D1F0DF', 200: '#A3E1BF',
+                            300: '#6DC99D', 400: '#3DAF7B', 500: '#1A6B4A',
+                            600: '#145A3D', 700: '#0F4A32', 800: '#0A3A27', 900: '#062A1C',
+                        },
+                        dark: { 800: '#0F172A', 900: '#080E1C', 950: '#040810' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::selection { background: rgba(201,168,76,0.3); color: #FFF; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s cubic-bezier(.4,0,.2,1); }
+        .hero-slide.active { opacity: 1; }
+
+        .geometric-border {
+            border: 1px solid rgba(201,168,76,0.2);
+            position: relative;
+        }
+        .geometric-border::before, .geometric-border::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border-color: #C9A84C; border-style: solid;
+        }
+        .geometric-border::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .geometric-border::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .gold-gradient { background: linear-gradient(135deg, #C9A84C, #E8D48B, #C9A84C); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .gold-border-gradient { border-image: linear-gradient(135deg, #C9A84C, #E8D48B, #C9A84C) 1; }
+
+        .card-hover { transition: all 0.5s cubic-bezier(.4,0,.2,1); }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(201,168,76,0.15); }
+
+        .nav-glass { background: rgba(8,14,28,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(201,168,76,0.15); }
+
+        .slide-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.4s; }
+        .slide-dot.active { background: #C9A84C; width: 32px; border-radius: 5px; }
+
+        .service-icon { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05)); border: 1px solid rgba(201,168,76,0.25); }
+
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(.4,0,.2,1); }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+        @keyframes pulse-gold { 0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,0.4)} 50%{box-shadow:0 0 0 12px rgba(201,168,76,0)} }
+
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-shimmer { background: linear-gradient(90deg, #C9A84C 0%, #E8D48B 25%, #FFF 50%, #E8D48B 75%, #C9A84C 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 4s linear infinite; }
+        .animate-pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
+
+        .visa-card { background: linear-gradient(135deg, #0F4A32 0%, #1A6B4A 50%, #0F4A32 100%); border: 1px solid rgba(201,168,76,0.3); }
+
+        .team-card-overlay { background: linear-gradient(to top, rgba(8,14,28,0.95) 0%, rgba(8,14,28,0.4) 50%, transparent 100%); }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #080E1C; }
+        ::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #B8923A; }
+
+        .toast { position: fixed; bottom: 30px; right: 30px; padding: 16px 24px; border-radius: 12px; background: #1A6B4A; color: white; font-weight: 500; transform: translateY(100px); opacity: 0; transition: all 0.4s ease; z-index: 9999; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+    </style>
+</head>
+<body class="bg-dark-900 text-white font-sans antialiased">
+
+    <!-- ===================== NAVIGATION ===================== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <img src="https://z-cdn-media.chatglm.cn/files/e9646fe9-f3c4-41bf-b684-352ebd072784.jpeg?auth_key=1882311772-3613a834adcc4d90bc9b0d256dade65f-0-868ef0092b2c380612c34ef1586bbb61" alt="Safa Al Manasik Logo" class="h-12 w-12 rounded-full object-cover border-2 border-gold-500/40 group-hover:border-gold-500 transition-all">
+                    <div class="hidden sm:block">
+                        <div class="text-gold-500 font-serif font-bold text-lg leading-tight">SAFA AL MANASIK</div>
+                        <div class="text-white/50 text-[10px] tracking-[0.25em] uppercase">Travel & Tours</div>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#home" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">Home</a>
+                    <a href="#about" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">About</a>
+                    <a href="#services" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">Services</a>
+                    <a href="#packages" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">Packages</a>
+                    <a href="#visa" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">Visa</a>
+                    <a href="#gallery" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">Gallery</a>
+                    <a href="#team" class="nav-link px-4 py-2 text-sm text-white/70 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/5">Team</a>
+                    <a href="#contact" class="ml-4 px-6 py-2.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 text-sm font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/20">Book Now</a>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button id="menuBtn" class="lg:hidden text-white/80 hover:text-gold-500 transition-colors p-2" onclick="toggleMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden nav-glass border-t border-gold-500/10">
+            <div class="px-6 py-6 space-y-1">
+                <a href="#home" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">Home</a>
+                <a href="#about" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">About</a>
+                <a href="#services" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">Services</a>
+                <a href="#packages" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">Packages</a>
+                <a href="#visa" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">Visa Services</a>
+                <a href="#gallery" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">Gallery</a>
+                <a href="#team" onclick="toggleMenu()" class="block px-4 py-3 text-white/70 hover:text-gold-500 hover:bg-white/5 rounded-lg transition-all">Our Team</a>
+                <a href="#contact" onclick="toggleMenu()" class="block mt-4 px-4 py-3 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg text-center">Book Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SLIDER (8 SLIDES) ===================== -->
+    <section id="home" class="relative h-screen min-h-[700px] overflow-hidden">
+        <!-- Slide 1: Kaaba -->
+        <div class="hero-slide active" data-slide="0">
+            <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=1920&q=80" alt="Kaaba Makkah" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/40"></div>
+            <div class="absolute inset-0 islamic-pattern"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-star-and-crescent text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Trusted Pilgrimage Partner</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Your Sacred <br><span class="gold-gradient">Journey</span> Begins Here
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Experience the most blessed journey of your lifetime with complete peace of mind. From visa to ziyarat — we handle everything.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#packages" class="px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">Explore Packages</a>
+                            <a href="tel:03201416586" class="px-8 py-3.5 border border-white/20 text-white rounded-lg hover:bg-white/10 transition-all flex items-center gap-2"><i class="fas fa-phone text-gold-500"></i> Call Us Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Masjid al-Nabawi -->
+        <div class="hero-slide" data-slide="1">
+            <img src="https://images.unsplash.com/photo-1585036156171-384164a8c696?w=1920&q=80" alt="Masjid al-Nabawi Madinah" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/40"></div>
+            <div class="absolute inset-0 islamic-pattern"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-mosque text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Madinah Packages</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Welcome to <br><span class="gold-gradient">Madinah</span> Al-Munawarah
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Stay steps away from Masjid al-Nabawi. Premium hotels, guided ziyarat, and a spiritually enriching experience awaits you.</p>
+                        <a href="#packages" class="inline-flex px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">View Umrah Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Logo / Brand -->
+        <div class="hero-slide" data-slide="2">
+            <img src="https://images.unsplash.com/photo-1546412414-e1885259563a?w=1920&q=80" alt="Makkah Night View" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-dark-950/90"></div>
+            <div class="absolute inset-0 islamic-pattern"></div>
+            <div class="relative z-10 h-full flex items-center justify-center">
+                <div class="text-center">
+                    <img src="https://z-cdn-media.chatglm.cn/files/e9646fe9-f3c4-41bf-b684-352ebd072784.jpeg?auth_key=1882311772-3613a834adcc4d90bc9b0d256dade65f-0-868ef0092b2c380612c34ef1586bbb61" alt="Safa Al Manasik Logo" class="h-32 sm:h-40 lg:h-48 mx-auto mb-8 rounded-2xl shadow-2xl shadow-gold-500/20 border-2 border-gold-500/30 animate-float">
+                    <h2 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold gold-gradient mb-4">Safa Al Manasik</h2>
+                    <p class="text-white/50 text-lg tracking-[0.3em] uppercase">Travel & Tours</p>
+                    <div class="mt-8 w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Hajj -->
+        <div class="hero-slide" data-slide="3">
+            <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=1920&q=80" alt="Hajj Pilgrims" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/30"></div>
+            <div class="absolute inset-0 islamic-pattern"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-kaaba text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Hajj 2025</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Complete <span class="gold-gradient">Hajj</span> Packages
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Shuttle-free, camp-based, and luxury Hajj packages. Moallim services, Mina/Arafat logistics, and 24/7 guidance included.</p>
+                        <a href="#packages" class="inline-flex px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">Hajj Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Turkey -->
+        <div class="hero-slide" data-slide="4">
+            <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=1920&q=80" alt="Istanbul Turkey" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/30"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-plane text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">International Tours</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Explore <span class="gold-gradient">Turkey</span>
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Istanbul, Cappadocia, Antalya & more. Discover the land where East meets West with our curated Turkish tours.</p>
+                        <a href="#packages" class="inline-flex px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">Turkey Tours</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Malaysia -->
+        <div class="hero-slide" data-slide="5">
+            <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1920&q=80" alt="Malaysia Twin Towers" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/30"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-mountain-sun text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Malaysia Tours</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Discover <span class="gold-gradient">Malaysia</span>
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Kuala Lumpur, Langkawi, Genting Highlands. Truly Asia — unforgettable experiences at unbeatable prices.</p>
+                        <a href="#packages" class="inline-flex px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">Malaysia Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Dubai UAE -->
+        <div class="hero-slide" data-slide="6">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1920&q=80" alt="Dubai Skyline" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-dark-950/30"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-city text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">UAE Tours</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Experience <span class="gold-gradient">Dubai</span>
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Burj Khalifa, Palm Jumeirah, Desert Safari. Luxury and adventure combined in the city of gold.</p>
+                        <a href="#packages" class="inline-flex px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">Dubai Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Visa Services -->
+        <div class="hero-slide" data-slide="7">
+            <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=1920&q=80" alt="Passport and Visa" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/85 to-dark-950/40"></div>
+            <div class="absolute inset-0 islamic-pattern"></div>
+            <div class="relative z-10 h-full flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                            <i class="fas fa-passport text-gold-500 text-xs"></i>
+                            <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Fast & Reliable</span>
+                        </div>
+                        <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6">
+                            Visa <span class="gold-gradient">Services</span> Worldwide
+                        </h1>
+                        <p class="text-white/60 text-lg mb-8 leading-relaxed max-w-lg">Saudi Arabia, UAE, Turkey, Malaysia, UK, USA, Schengen — hassle-free visa processing with expert guidance.</p>
+                        <a href="#visa" class="inline-flex px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25">Apply for Visa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide Indicators -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+            <div class="slide-dot active" onclick="goToSlide(0)"></div>
+            <div class="slide-dot" onclick="goToSlide(1)"></div>
+            <div class="slide-dot" onclick="goToSlide(2)"></div>
+            <div class="slide-dot" onclick="goToSlide(3)"></div>
+            <div class="slide-dot" onclick="goToSlide(4)"></div>
+            <div class="slide-dot" onclick="goToSlide(5)"></div>
+            <div class="slide-dot" onclick="goToSlide(6)"></div>
+            <div class="slide-dot" onclick="goToSlide(7)"></div>
+        </div>
+
+        <!-- Slide Arrows -->
+        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-dark-950/50 border border-white/10 flex items-center justify-center text-white/70 hover:text-gold-500 hover:border-gold-500/30 transition-all backdrop-blur-sm">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-dark-950/50 border border-white/10 flex items-center justify-center text-white/70 hover:text-gold-500 hover:border-gold-500/30 transition-all backdrop-blur-sm">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 right-8 z-20 hidden sm:flex flex-col items-center gap-2">
+            <span class="text-white/30 text-xs tracking-widest uppercase" style="writing-mode:vertical-rl">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-gold-500 to-transparent animate-pulse"></div>
+        </div>
+    </section>
+
+    <!-- ===================== STATS BAR ===================== -->
+    <section class="relative z-10 -mt-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="bg-dark-800/90 backdrop-blur-xl border border-gold-500/15 rounded-2xl p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-6 shadow-2xl">
+                <div class="text-center scroll-reveal">
+                    <div class="text-3xl sm:text-4xl font-bold gold-gradient font-serif">5000+</div>
+                    <div class="text-white/40 text-sm mt-1">Happy Pilgrims</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="text-3xl sm:text-4xl font-bold gold-gradient font-serif">15+</div>
+                    <div class="text-white/40 text-sm mt-1">Years Experience</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="text-3xl sm:text-4xl font-bold gold-gradient font-serif">20+</div>
+                    <div class="text-white/40 text-sm mt-1">Countries Covered</div>
+                </div>
+                <div class="text-center scroll-reveal">
+                    <div class="text-3xl sm:text-4xl font-bold gold-gradient font-serif">98%</div>
+                    <div class="text-white/40 text-sm mt-1">Client Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="py-24 sm:py-32 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left: Image -->
+                <div class="scroll-reveal relative">
+                    <div class="geometric-border rounded-2xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&q=80" alt="Kaaba at night" class="w-full h-[500px] object-cover">
+                    </div>
+                    <!-- Floating Card -->
+                    <div class="absolute -bottom-6 -right-6 sm:right-8 bg-dark-800/95 backdrop-blur-xl border border-gold-500/20 rounded-xl p-5 shadow-2xl animate-float">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-mosque-500 to-mosque-700 flex items-center justify-center">
+                                <i class="fas fa-certificate text-gold-500"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-bold text-sm">Ministry Approved</div>
+                                <div class="text-white/40 text-xs">Licensed Hajj & Umrah Operator</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Content -->
+                <div class="scroll-reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                        <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">About Us</span>
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                        More Than a Travel Agency — <span class="gold-gradient">A Spiritual Companion</span>
+                    </h2>
+                    <p class="text-white/60 text-lg leading-relaxed mb-6">
+                        <strong class="text-white/90">Safa Al Manasik Travel & Tours</strong> was founded with a singular vision — to make the sacred journeys of Hajj and Umrah accessible, comfortable, and spiritually fulfilling for every Muslim family in Pakistan.
+                    </p>
+                    <p class="text-white/60 leading-relaxed mb-8">
+                        Based in the heart of Lahore, we have grown from a small office to one of the most trusted names in pilgrimage travel. Our team personally accompanies groups, ensuring every detail — from hotel proximity to Haram to guided Ziyarat — is perfected. We also specialize in international tourism and visa services for destinations worldwide.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-mosque-400"></i>
+                            <span class="text-white/70 text-sm">Government Licensed</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-mosque-400"></i>
+                            <span class="text-white/70 text-sm">5-Star Hotels</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-mosque-400"></i>
+                            <span class="text-white/70 text-sm">Expert Guides</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-check-circle text-mosque-400"></i>
+                            <span class="text-white/70 text-sm">24/7 Support</span>
+                        </div>
+                    </div>
+                    <a href="#services" class="inline-flex items-center gap-2 text-gold-500 font-semibold hover:text-gold-400 transition-colors group">
+                        Learn More About Our Services <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section id="services" class="py-24 sm:py-32 bg-dark-800/50 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">What We Offer</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Our Premium <span class="gold-gradient">Services</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto">From the holiest pilgrimages to the most exciting international destinations — we bring the world to your doorstep.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Hajj -->
+                <div class="card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80" alt="Hajj" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
+                        <div class="absolute top-4 left-4 px-3 py-1 bg-gold-500/90 text-dark-900 text-xs font-bold rounded-full">POPULAR</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="service-icon mb-4">
+                            <i class="fas fa-kaaba text-gold-500 text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-2">Hajj Packages</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">Complete Hajj services including Moallim, Mina & Arafat camps, Qurbani, and guided rituals. Economy to 5-star options.</p>
+                    </div>
+                </div>
+
+                <!-- Umrah -->
+                <div class="card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="c:\Users\hp\Desktop\Fazaila Sana\madinah-during-umrah.webp" alt="Umrah Madinah" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="service-icon mb-4">
+                            <i class="fas fa-mosque text-gold-500 text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-2">Umrah Packages</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">Flexible Umrah plans from 7 to 21 days. Hotels near Haramain, Ziyarat tours, transport, and visa processing included.</p>
+                    </div>
+                </div>
+
+                <!-- International Tours -->
+                <div class="card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="c:\Users\hp\Desktop\Fazaila Sana\Affordable-International-Tours-1 (1).jpg" alt="Turkey Tours" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="service-icon mb-4">
+                            <i class="fas fa-globe text-gold-500 text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-2">International Tours</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">Turkey, Malaysia, Dubai, Thailand, Singapore, and more. Group & family tours with complete itinerary management.</p>
+                    </div>
+                </div>
+
+                <!-- Visa Services -->
+                <div class="card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=600&q=80" alt="Visa Services" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="service-icon mb-4">
+                            <i class="fas fa-passport text-gold-500 text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-2">Visa Services</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">Saudi, UAE, Turkey, Malaysia, Schengen, UK, USA visas. Fast processing with high approval rate and documentation help.</p>
+                    </div>
+                </div>
+
+                <!-- Hotel Bookings -->
+                <div class="card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Luxury Hotel" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="service-icon mb-4">
+                            <i class="fas fa-hotel text-gold-500 text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-2">Hotel Bookings</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">Premium hotels in Makkah & Madinah walking distance from Haram. Also international hotel bookings at best rates worldwide.</p>
+                    </div>
+                </div>
+
+                <!-- Transportation -->
+                <div class="card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="c:\Users\hp\Desktop\Fazaila Sana\UMRAH_BUS.jpg" alt="Transportation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="service-icon mb-4">
+                            <i class="fas fa-bus text-gold-500 text-xl"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold mb-2">Transportation</h3>
+                        <p class="text-white/50 text-sm leading-relaxed">Airport transfers, intercity travel, private coaches for Ziyarat, and luxury vehicles for corporate & family trips.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PACKAGES ===================== -->
+    <section id="packages" class="py-24 sm:py-32 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-30"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Best Deals</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Featured <span class="gold-gradient">Packages</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto">Handcrafted packages for every budget. All-inclusive pricing with no hidden charges.</p>
+            </div>
+
+            <!-- Package Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12 scroll-reveal">
+                <button class="pkg-tab active px-5 py-2 rounded-full text-sm font-semibold transition-all" data-filter="all">All</button>
+                <button class="pkg-tab px-5 py-2 rounded-full text-sm font-semibold transition-all" data-filter="hajj">Hajj</button>
+                <button class="pkg-tab px-5 py-2 rounded-full text-sm font-semibold transition-all" data-filter="umrah">Umrah</button>
+                <button class="pkg-tab px-5 py-2 rounded-full text-sm font-semibold transition-all" data-filter="international">International</button>
+            </div>
+
+            <div id="packagesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Package 1: Hajj -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="hajj">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=500&q=80" alt="Hajj Package" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-mosque-600 text-white text-xs font-bold rounded-full">HAJJ</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Hajj Economy Package</h3>
+                        <p class="text-white/40 text-xs mb-3">15 Days • Group Package</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">3-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-bed mr-1"></i>Shared Room</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Full Board</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 850,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 2: Hajj Premium -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-gold-500/20 rounded-2xl overflow-hidden scroll-reveal relative" data-category="hajj">
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=500&q=80" alt="Hajj Premium" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 left-3 px-3 py-1 bg-gold-500 text-dark-900 text-xs font-bold rounded-full">PREMIUM</div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-mosque-600 text-white text-xs font-bold rounded-full">HAJJ</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Hajj Premium Package</h3>
+                        <p class="text-white/40 text-xs mb-3">20 Days • Private Package</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">5-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-bed mr-1"></i>Private Room</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Full Board</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 1,750,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 3: Umrah -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="umrah">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="c:\Users\hp\Desktop\Fazaila Sana\images.jpg" alt="Umrah Package" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">UMRAH</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Umrah Standard</h3>
+                        <p class="text-white/40 text-xs mb-3">7 Days • Group Package</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">4-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-bed mr-1"></i>Twin Sharing</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Breakfast + Dinner</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 285,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 4: Umrah Luxury -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="umrah">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="c:\Users\hp\Desktop\Fazaila Sana\umrah-packages-luxury.webp" alt="Umrah Luxury" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">UMRAH</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Umrah Luxury VIP</h3>
+                        <p class="text-white/40 text-xs mb-3">14 Days • Private Package</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">5-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-bed mr-1"></i>Private Suite</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Full Board</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 550,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 5: Turkey -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="international">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=500&q=80" alt="Turkey Tour" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">TURKEY</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Turkey Explorer</h3>
+                        <p class="text-white/40 text-xs mb-3">8 Days • Istanbul + Cappadocia</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">4-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-plane mr-1"></i>Air Ticket</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Breakfast + Dinner</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 325,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 6: Malaysia -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="international">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=500&q=80" alt="Malaysia Tour" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-yellow-500 text-dark-900 text-xs font-bold rounded-full">MALAYSIA</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Malaysia Delight</h3>
+                        <p class="text-white/40 text-xs mb-3">6 Days • KL + Langkawi</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">4-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-plane mr-1"></i>Air Ticket</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Breakfast</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 245,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 7: Dubai -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="international">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80" alt="Dubai Tour" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-full">DUBAI</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Dubai Extravaganza</h3>
+                        <p class="text-white/40 text-xs mb-3">5 Days • City + Desert Safari</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">5-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-plane mr-1"></i>Air Ticket</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Breakfast</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 195,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package 8: Thailand -->
+                <div class="pkg-card card-hover bg-dark-900/80 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden scroll-reveal" data-category="international">
+                    <div class="relative h-44 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=500&q=80" alt="Thailand Tour" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/30 to-transparent"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 bg-purple-600 text-white text-xs font-bold rounded-full">THAILAND</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-serif text-lg font-bold mb-1">Thailand Getaway</h3>
+                        <p class="text-white/40 text-xs mb-3">7 Days • Bangkok + Pattaya</p>
+                        <div class="flex items-center gap-1 mb-3">
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <i class="fas fa-star text-gold-500 text-xs"></i>
+                            <span class="text-white/30 text-xs ml-1">4-Star</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4 text-xs text-white/40">
+                            <span><i class="fas fa-plane mr-1"></i>Air Ticket</span>
+                            <span>•</span>
+                            <span><i class="fas fa-utensils mr-1"></i>Breakfast + Dinner</span>
+                        </div>
+                        <div class="flex items-end justify-between">
+                            <div>
+                                <span class="text-white/30 text-xs">Starting from</span>
+                                <div class="text-gold-500 font-bold text-xl">PKR 215,000</div>
+                            </div>
+                            <a href="#contact" class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                <i class="fas fa-arrow-right text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== VISA SERVICES ===================== -->
+    <section id="visa" class="py-24 sm:py-32 bg-dark-800/50 relative overflow-hidden">
+        <div class="absolute inset-0 islamic-pattern opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <i class="fas fa-passport text-gold-500 text-xs"></i>
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Visa Processing</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Visa Services <span class="gold-gradient">Worldwide</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto">Fast, reliable, and hassle-free visa processing for 20+ countries. Our expert team handles all documentation.</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
+                <!-- Saudi Arabia -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇸🇦</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">Saudi Arabia</h4>
+                    <p class="text-white/30 text-xs mt-1">Hajj & Umrah</p>
+                </div>
+                <!-- UAE -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇦🇪</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">UAE</h4>
+                    <p class="text-white/30 text-xs mt-1">Visit & Work</p>
+                </div>
+                <!-- Turkey -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇹🇷</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">Turkey</h4>
+                    <p class="text-white/30 text-xs mt-1">E-Visa & Sticker</p>
+                </div>
+                <!-- Malaysia -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇲🇾</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">Malaysia</h4>
+                    <p class="text-white/30 text-xs mt-1">Tourist & Business</p>
+                </div>
+                <!-- UK -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇬🇧</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">United Kingdom</h4>
+                    <p class="text-white/30 text-xs mt-1">Visit & Student</p>
+                </div>
+                <!-- USA -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇺🇸</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">United States</h4>
+                    <p class="text-white/30 text-xs mt-1">B1/B2 & Student</p>
+                </div>
+                <!-- Schengen -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇪🇺</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">Schengen</h4>
+                    <p class="text-white/30 text-xs mt-1">26 European Countries</p>
+                </div>
+                <!-- Thailand -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇹🇭</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">Thailand</h4>
+                    <p class="text-white/30 text-xs mt-1">Tourist Visa</p>
+                </div>
+                <!-- China -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇨🇳</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">China</h4>
+                    <p class="text-white/30 text-xs mt-1">Business & Tourist</p>
+                </div>
+                <!-- Azerbaijan -->
+                <div class="visa-card rounded-2xl p-5 text-center card-hover scroll-reveal cursor-pointer group">
+                    <div class="text-4xl mb-3">🇦🇿</div>
+                    <h4 class="font-bold text-sm text-white group-hover:text-gold-500 transition-colors">Azerbaijan</h4>
+                    <p class="text-white/30 text-xs mt-1">E-Visa</p>
+                </div>
+            </div>
+
+            <!-- Visa Process Steps -->
+            <div class="max-w-4xl mx-auto scroll-reveal">
+                <div class="grid sm:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-gold-500 font-bold text-lg">01</span>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Consultation</h4>
+                        <p class="text-white/40 text-xs">Free assessment of your visa requirements</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-gold-500 font-bold text-lg">02</span>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Documentation</h4>
+                        <p class="text-white/40 text-xs">We help prepare & verify all documents</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-gold-500 font-bold text-lg">03</span>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Submission</h4>
+                        <p class="text-white/40 text-xs">We submit & follow up with embassy</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-3">
+                            <span class="text-gold-500 font-bold text-lg">04</span>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Approval</h4>
+                        <p class="text-white/40 text-xs">Get your visa & travel with confidence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== GALLERY ===================== -->
+    <section id="gallery" class="py-24 sm:py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Our Gallery</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Moments of <span class="gold-gradient">Blessing</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto">Glimpses from our pilgrims' journeys and international tours.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                <div class="row-span-2 rounded-2xl overflow-hidden scroll-reveal group cursor-pointer relative">
+                    <img src="c:\Users\hp\Desktop\Fazaila Sana\360_F_260180924_yOJC8NytSXhmkBzDqHkoTL7CU0qcJDi7.jpg" alt="Kaaba" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-dark-950/0 group-hover:bg-dark-950/40 transition-all flex items-end p-4">
+                        <span class="text-white font-serif font-bold opacity-0 group-hover:opacity-100 transition-opacity translate-y-4 group-hover:translate-y-0">Makkah Al-Mukarramah</span>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden scroll-reveal group cursor-pointer relative">
+                    <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=600&q=80" alt="Madinah" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-dark-950/0 group-hover:bg-dark-950/40 transition-all flex items-end p-4">
+                        <span class="text-white font-serif font-bold opacity-0 group-hover:opacity-100 transition-opacity">Madinah Al-Munawarah</span>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden scroll-reveal group cursor-pointer relative">
+                    <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=400&q=80" alt="Istanbul" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-dark-950/0 group-hover:bg-dark-950/40 transition-all flex items-end p-4">
+                        <span class="text-white font-serif font-bold opacity-0 group-hover:opacity-100 transition-opacity">Istanbul, Turkey</span>
+                    </div>
+                </div>
+                <div class="row-span-2 rounded-2xl overflow-hidden scroll-reveal group cursor-pointer relative">
+                    <img src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80" alt="Malaysia" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-dark-950/0 group-hover:bg-dark-950/40 transition-all flex items-end p-4">
+                        <span class="text-white font-serif font-bold opacity-0 group-hover:opacity-100 transition-opacity translate-y-4 group-hover:translate-y-0">Kuala Lumpur, Malaysia</span>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden scroll-reveal group cursor-pointer relative">
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&q=80" alt="Dubai" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-dark-950/0 group-hover:bg-dark-950/40 transition-all flex items-end p-4">
+                        <span class="text-white font-serif font-bold opacity-0 group-hover:opacity-100 transition-opacity">Dubai, UAE</span>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden scroll-reveal group cursor-pointer relative">
+                    <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=400&q=80" alt="Thailand" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-dark-950/0 group-hover:bg-dark-950/40 transition-all flex items-end p-4">
+                        <span class="text-white font-serif font-bold opacity-0 group-hover:opacity-100 transition-opacity">Bangkok, Thailand</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TEAM ===================== -->
+    <section id="team" class="py-24 sm:py-32 bg-dark-800/50 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-20"></div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Leadership</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Meet Our <span class="gold-gradient">Team</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto">The dedicated people behind your perfect journeys.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <!-- Muhammad Tahir - Director -->
+                <div class="card-hover scroll-reveal group">
+                    <div class="relative rounded-2xl overflow-hidden h-[450px]">
+                        <img src="https://z-cdn-media.chatglm.cn/files/2ed3e4f5-6ce0-40cb-b81a-00b0e245e047.jpeg?auth_key=1882311772-88037c5cc685443d8fc3359ceddb7770-0-8f8b99cecba2988565dc64c4be7d9253" alt="Muhammad Tahir - Director" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                        <div class="team-card-overlay absolute inset-0"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-px bg-gold-500"></div>
+                                <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Director</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold mb-1">Muhammad Tahir</h3>
+                            <p class="text-white/50 text-sm leading-relaxed">With over 15 years of experience in pilgrimage travel, Muhammad Tahir leads Safa Al Manasik with a vision to serve every pilgrim with dedication and care.</p>
+                            <div class="flex gap-3 mt-4">
+                                <a href="tel:03201416586" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                    <i class="fas fa-phone text-xs"></i>
+                                </a>
+                                <a href="mailto:M.TAHIRSMT@GMAIL.COM" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                    <i class="fas fa-envelope text-xs"></i>
+                                </a>
+                                <a href="https://wa.me/923201416586" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-green-600 hover:text-white transition-all">
+                                    <i class="fab fa-whatsapp text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Umaira - CEO -->
+                <div class="card-hover scroll-reveal group">
+                    <div class="relative rounded-2xl overflow-hidden h-[450px]">
+                        <img src="https://z-cdn-media.chatglm.cn/files/2d8287d9-d440-46b7-8180-30445ef9013b.jpeg?auth_key=1882311772-d2c0d1bb98ab402f9de558025134fc28-0-feadbaa1372cbf11742e965cd60db909" alt="Umaira - CEO" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                        <div class="team-card-overlay absolute inset-0"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-8 h-px bg-gold-500"></div>
+                                <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">CEO</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold mb-1">Umaira</h3>
+                            <p class="text-white/50 text-sm leading-relaxed">As CEO, Umaira brings modern management and a client-first approach to the company, ensuring world-class service standards and seamless travel experiences for all.</p>
+                            <div class="flex gap-3 mt-4">
+                                <a href="tel:03201416586" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                    <i class="fas fa-phone text-xs"></i>
+                                </a>
+                                <a href="mailto:M.TAHIRSMT@GMAIL.COM" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-gold-500 hover:text-dark-900 transition-all">
+                                    <i class="fas fa-envelope text-xs"></i>
+                                </a>
+                                <a href="https://wa.me/923201416586" target="_blank" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:bg-green-600 hover:text-white transition-all">
+                                    <i class="fab fa-whatsapp text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section class="py-24 sm:py-32 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Testimonials</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">What Our <span class="gold-gradient">Pilgrims</span> Say</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 card-hover scroll-reveal">
+                    <div class="flex gap-1 mb-4">
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                    </div>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">"Alhamdulillah, our Hajj journey with Safa Al Manasik was absolutely perfect. Muhammad Tahir personally ensured everything was smooth. The hotel was just 2 minutes from Haram. Truly blessed experience."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-mosque-600 flex items-center justify-center text-gold-500 font-bold text-sm">HA</div>
+                        <div>
+                            <div class="font-semibold text-sm">Haji Ahmad Khan</div>
+                            <div class="text-white/30 text-xs">Hajj 2024 • Lahore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 card-hover scroll-reveal">
+                    <div class="flex gap-1 mb-4">
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                    </div>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">"Umaira and her team made our Turkey tour unforgettable. From Istanbul's mosques to Cappadocia's balloons — everything was perfectly organized. Best travel agency in Lahore!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-mosque-600 flex items-center justify-center text-gold-500 font-bold text-sm">FN</div>
+                        <div>
+                            <div class="font-semibold text-sm">Fatima Noor</div>
+                            <div class="text-white/30 text-xs">Turkey Tour 2024 • Islamabad</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 card-hover scroll-reveal">
+                    <div class="flex gap-1 mb-4">
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star text-gold-500 text-sm"></i>
+                        <i class="fas fa-star-half-alt text-gold-500 text-sm"></i>
+                    </div>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6">"Got my UAE visa processed in just 5 days! The team was very professional and kept me updated at every step. Highly recommend their visa services. JazakAllah Khair!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-mosque-600 flex items-center justify-center text-gold-500 font-bold text-sm">UA</div>
+                        <div>
+                            <div class="font-semibold text-sm">Umer Ali</div>
+                            <div class="text-white/30 text-xs">UAE Visa • Karachi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CTA BANNER ===================== -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=1920&q=80" alt="Kaaba" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-dark-950/85"></div>
+            <div class="absolute inset-0 islamic-pattern"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center scroll-reveal">
+            <div class="animate-shimmer font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+            <p class="text-white/50 text-lg mb-2">In the name of Allah, the Most Gracious, the Most Merciful</p>
+            <div class="w-24 h-px bg-gold-500 mx-auto my-8"></div>
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold mb-4">Ready to Begin Your Sacred Journey?</h3>
+            <p class="text-white/60 mb-8 max-w-xl mx-auto">Contact us today for a free consultation. Our team is ready to craft the perfect package for you and your family.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#contact" class="px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25 animate-pulse-gold">Get Free Consultation</a>
+                <a href="https://wa.me/923201416586" target="_blank" class="px-8 py-3.5 bg-green-600 text-white font-bold rounded-lg hover:bg-green-500 transition-all flex items-center gap-2">
+                    <i class="fab fa-whatsapp text-lg"></i> WhatsApp Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="py-24 sm:py-32 bg-dark-800/50 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 bg-gold-500/10 mb-6">
+                    <span class="text-gold-500 text-xs font-semibold tracking-widest uppercase">Get In Touch</span>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">Contact <span class="gold-gradient">Us</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto">Visit our office, call us, or send a message. We're always here to help plan your journey.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- Contact Info -->
+                <div class="lg:col-span-2 space-y-6 scroll-reveal">
+                    <!-- Office Address -->
+                    <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex gap-4 card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-location-dot text-gold-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-sm mb-1">Office Address</h4>
+                            <p class="text-white/50 text-sm leading-relaxed">Grand Inn Hotel, 1st Floor, Office #2, Hill View Arcade, 5 Davis Road, Lahore</p>
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex gap-4 card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-gold-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-sm mb-1">Phone / WhatsApp</h4>
+                            <a href="tel:03201416586" class="text-white/50 text-sm hover:text-gold-500 transition-colors block">0320-1416586</a>
+                            <a href="https://wa.me/923201416586" target="_blank" class="text-green-500 text-xs hover:text-green-400 transition-colors">Click to WhatsApp →</a>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex gap-4 card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-gold-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-sm mb-1">Email</h4>
+                            <a href="mailto:M.TAHIRSMT@GMAIL.COM" class="text-white/50 text-sm hover:text-gold-500 transition-colors break-all">M.TAHIRSMT@GMAIL.COM</a>
+                        </div>
+                    </div>
+
+                    <!-- Working Hours -->
+                    <div class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 flex gap-4 card-hover">
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-clock text-gold-500"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-sm mb-1">Working Hours</h4>
+                            <p class="text-white/50 text-sm">Mon - Sat: 9:00 AM - 9:00 PM</p>
+                            <p class="text-white/50 text-sm">Sunday: By Appointment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-3 scroll-reveal">
+                    <form id="contactForm" class="bg-dark-900/60 backdrop-blur-sm border border-white/5 rounded-2xl p-6 sm:p-8">
+                        <h3 class="font-serif text-xl font-bold mb-6">Send Us a Message</h3>
+                        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="text-white/50 text-xs font-medium mb-1.5 block">Full Name *</label>
+                                <input type="text" name="name" required class="w-full bg-dark-800 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-all" placeholder="Your full name">
+                            </div>
+                            <div>
+                                <label class="text-white/50 text-xs font-medium mb-1.5 block">Phone Number *</label>
+                                <input type="tel" name="phone" required class="w-full bg-dark-800 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-all" placeholder="03XX-XXXXXXX">
+                            </div>
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="text-white/50 text-xs font-medium mb-1.5 block">Email</label>
+                                <input type="email" name="email" class="w-full bg-dark-800 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-all" placeholder="your@email.com">
+                            </div>
+                            <div>
+                                <label class="text-white/50 text-xs font-medium mb-1.5 block">Service Interested In *</label>
+                                <select name="service" required class="w-full bg-dark-800 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-all appearance-none cursor-pointer">
+                                    <option value="" class="text-dark-900">Select a service</option>
+                                    <option value="hajj" class="text-dark-900">Hajj Package</option>
+                                    <option value="umrah" class="text-dark-900">Umrah Package</option>
+                                    <option value="turkey" class="text-dark-900">Turkey Tour</option>
+                                    <option value="malaysia" class="text-dark-900">Malaysia Tour</option>
+                                    <option value="dubai" class="text-dark-900">Dubai Tour</option>
+                                    <option value="thailand" class="text-dark-900">Thailand Tour</option>
+                                    <option value="visa-saudi" class="text-dark-900">Saudi Visa</option>
+                                    <option value="visa-uae" class="text-dark-900">UAE Visa</option>
+                                    <option value="visa-schengen" class="text-dark-900">Schengen Visa</option>
+                                    <option value="visa-uk" class="text-dark-900">UK Visa</option>
+                                    <option value="visa-usa" class="text-dark-900">USA Visa</option>
+                                    <option value="visa-other" class="text-dark-900">Other Visa</option>
+                                    <option value="other" class="text-dark-900">Other Inquiry</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-white/50 text-xs font-medium mb-1.5 block">Number of Travelers</label>
+                            <input type="number" name="travelers" min="1" max="100" class="w-full bg-dark-800 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-all" placeholder="How many people will travel?">
+                        </div>
+                        <div class="mb-6">
+                            <label class="text-white/50 text-xs font-medium mb-1.5 block">Your Message *</label>
+                            <textarea name="message" required rows="4" class="w-full bg-dark-800 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-all resize-none" placeholder="Tell us about your travel plans, preferred dates, budget, or any questions..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-8 py-3.5 bg-gradient-to-r from-gold-600 to-gold-500 text-dark-900 font-bold rounded-lg hover:from-gold-500 hover:to-gold-400 transition-all shadow-lg shadow-gold-500/25 flex items-center justify-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Map Embed -->
+            <div class="mt-12 rounded-2xl overflow-hidden border border-white/10 scroll-reveal" style="height:300px;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.123456789!2d74.3456!3d31.5678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDM0JzA0LjEiTiA3NMKwMjAnNDQuMiJF!5e0!3m2!1sen!2spk!4v1234567890" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="bg-dark-950 border-t border-white/5 relative">
+        <div class="absolute inset-0 islamic-pattern opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Top -->
+            <div class="py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Brand -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://z-cdn-media.chatglm.cn/files/e9646fe9-f3c4-41bf-b684-352ebd072784.jpeg?auth_key=1882311772-3613a834adcc4d90bc9b0d256dade65f-0-868ef0092b2c380612c34ef1586bbb61" alt="Logo" class="h-12 w-12 rounded-full border border-gold-500/30">
+                        <div>
+                            <div class="text-gold-500 font-serif font-bold text-sm">SAFA AL MANASIK</div>
+                            <div class="text-white/30 text-[9px] tracking-[0.2em] uppercase">Travel & Tours</div>
+                        </div>
+                    </div>
+                    <p class="text-white/40 text-sm leading-relaxed mb-4">Your trusted partner for Hajj, Umrah, and worldwide travel. Serving with integrity since day one.</p>
+                    <div class="flex gap-3">
+                        <a href="https://wa.me/923201416586" target="_blank" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-green-600 hover:border-green-600 hover:text-white transition-all">
+                            <i class="fab fa-whatsapp text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-all">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-sky-500 hover:border-sky-500 hover:text-white transition-all">
+                            <i class="fab fa-twitter text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-sm mb-4 text-gold-500">Quick Links</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="#home" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Home</a></li>
+                        <li><a href="#about" class="text-white/40 text-sm hover:text-gold-500 transition-colors">About Us</a></li>
+                        <li><a href="#services" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Services</a></li>
+                        <li><a href="#packages" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Packages</a></li>
+                        <li><a href="#visa" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Visa Services</a></li>
+                        <li><a href="#contact" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="font-semibold text-sm mb-4 text-gold-500">Services</h4>
+                    <ul class="space-y-2.5">
+                        <li><a href="#packages" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Hajj Packages</a></li>
+                        <li><a href="#packages" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Umrah Packages</a></li>
+                        <li><a href="#packages" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Turkey Tours</a></li>
+                        <li><a href="#packages" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Malaysia Tours</a></li>
+                        <li><a href="#packages" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Dubai Tours</a></li>
+                        <li><a href="#visa" class="text-white/40 text-sm hover:text-gold-500 transition-colors">Visa Processing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-semibold text-sm mb-4 text-gold-500">Contact Info</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-location-dot text-gold-500/60 text-xs mt-1.5"></i>
+                            <span class="text-white/40 text-sm">Grand Inn Hotel, 1st Floor, Office #2, Hill View Arcade, 5 Davis Road, Lahore</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone text-gold-500/60 text-xs"></i>
+                            <a href="tel:03201416586" class="text-white/40 text-sm hover:text-gold-500 transition-colors">0320-1416586</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-gold-500/60 text-xs"></i>
+                            <a href="mailto:M.TAHIRSMT@GMAIL.COM" class="text-white/40 text-sm hover:text-gold-500 transition-colors break-all">M.TAHIRSMT@GMAIL.COM</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom -->
+            <div class="border-t border-white/5 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-white/20 text-xs text-center sm:text-left">© 2025 Safa Al Manasik Travel & Tours. All rights reserved.</p>
+                <p class="text-white/20 text-xs">Designed with ❤️ for the lovers of Haramain</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== WHATSAPP FLOATING BUTTON ===================== -->
+    <a href="https://wa.me/923201416586" target="_blank" class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:bg-green-400 transition-all hover:scale-110 animate-pulse-gold" style="--tw-shadow-color: rgba(34,197,94,0.3);">
+        <i class="fab fa-whatsapp text-white text-2xl"></i>
+    </a>
+
+    <!-- ===================== BACK TO TOP ===================== -->
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-dark-800 border border-gold-500/30 rounded-full flex items-center justify-center text-gold-500 hover:bg-gold-500 hover:text-dark-900 transition-all opacity-0 pointer-events-none" style="transition: opacity 0.3s, background 0.3s, color 0.3s;">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ===================== TOAST ===================== -->
+    <div id="toast" class="toast">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-check-circle text-lg"></i>
+            <span id="toastMsg">Message sent successfully!</span>
+        </div>
+    </div>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+        // ===== HERO SLIDER =====
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        let slideInterval;
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+            resetInterval();
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+        resetInterval();
+
+        // ===== MOBILE MENU =====
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.getElementById('menuBtn');
+            menu.classList.toggle('hidden');
+            const isOpen = !menu.classList.contains('hidden');
+            btn.innerHTML = isOpen ? '<i class="fas fa-times text-xl"></i>' : '<i class="fas fa-bars text-xl"></i>';
+        }
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('nav-glass');
+                backToTop.style.opacity = '1';
+                backToTop.style.pointerEvents = 'auto';
+            } else {
+                navbar.classList.remove('nav-glass');
+                backToTop.style.opacity = '0';
+                backToTop.style.pointerEvents = 'none';
+            }
+        });
+
+        // ===== SCROLL REVEAL =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // ===== PACKAGE FILTER =====
+        const tabs = document.querySelectorAll('.pkg-tab');
+        const cards = document.querySelectorAll('.pkg-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                    t.style.background = 'transparent';
+                    t.style.color = 'rgba(255,255,255,0.5)';
+                    t.style.border = '1px solid rgba(255,255,255,0.1)';
+                });
+                tab.classList.add('active');
+                tab.style.background = 'linear-gradient(135deg, #C9A84C, #B8923A)';
+                tab.style.color = '#080E1C';
+                tab.style.border = '1px solid #C9A84C';
+
+                const filter = tab.dataset.filter;
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = '';
+                        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => { card.style.display = 'none'; }, 300);
+                    }
+                });
+            });
+        });
+
+        // Init active tab style
+        const activeTab = document.querySelector('.pkg-tab.active');
+        if (activeTab) {
+            activeTab.style.background = 'linear-gradient(135deg, #C9A84C, #B8923A)';
+            activeTab.style.color = '#080E1C';
+            activeTab.style.border = '1px solid #C9A84C';
+        }
+        tabs.forEach(t => {
+            if (!t.classList.contains('active')) {
+                t.style.background = 'transparent';
+                t.style.color = 'rgba(255,255,255,0.5)';
+                t.style.border = '1px solid rgba(255,255,255,0.1)';
+            }
+        });
+
+        // ===== CONTACT FORM =====
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const email = formData.get('email') || 'N/A';
+            const service = formData.get('service');
+            const travelers = formData.get('travelers') || 'N/A';
+            const message = formData.get('message');
+
+            // Build WhatsApp message
+            const waMsg = `Assalam o Alaikum! I am ${name}.%0A%0A*Service:* ${service}%0A*Phone:* ${phone}%0A*Email:* ${email}%0A*Travelers:* ${travelers}%0A%0A*Message:* ${message}`;
+
+            // Show toast
+            showToast('Redirecting to WhatsApp...');
+
+            // Open WhatsApp
+            setTimeout(() => {
+                window.open(`https://wa.me/923201416586?text=${waMsg}`, '_blank');
+            }, 800);
+
+            this.reset();
+        });
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        // ===== TOUCH SWIPE FOR SLIDER =====
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const heroSection = document.getElementById('home');
+
+        heroSection.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        heroSection.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
